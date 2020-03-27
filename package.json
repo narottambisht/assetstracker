@@ -1,0 +1,25 @@
+{
+  "name": "assetstracker",
+  "version": "1.0.0",
+  "description": "An application to track your FD's, RD's, PPF's.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "assetstracker"
+  ],
+  "author": "NAROTTAM SINGH",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.4.0",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.6",
+    "passport-local": "^1.0.0",
+    "uuid": "^7.0.2"
+  }
+}
