@@ -7,8 +7,9 @@ const userSchema = new Schema({
     required: true
   },
   email: {
-    type: String,
-    required: true
+    type: Schema.Types.String,
+    required: true,
+    unique: true,
   },
   password: {
     type: String,
