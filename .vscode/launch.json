@@ -10,6 +10,9 @@
             "name": "Launch Program",
             "restart": true,
             "runtimeExecutable": "nodemon",
+            "env": {
+                "JWT_KEY": "potterhead"
+            },
             "console": "integratedTerminal",
             "program": "${workspaceFolder}/app.js"
         }

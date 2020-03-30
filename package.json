@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon -r dotenv/config app.js"
   },
   "keywords": [
     "assetstracker"
@@ -15,12 +15,15 @@
   "dependencies": {
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.6",
     "passport-local": "^1.0.0",
-    "uuid": "^7.0.2"
+    "uuid": "^7.0.2",
+    "validator": "^13.0.0"
   }
 }

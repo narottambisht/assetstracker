@@ -5,7 +5,9 @@ const MESSAGE = {
     invalidUsername: 'Username doesn\'t exists',
     invalidPassword: 'Invalid password must be atleast 5 digits',
     invalidEmail: 'Invalid email',
-    validationFailed: 'Validation Failed'
+    validationFailed: 'Validation Failed',
+    invalidCred: "Login failed. Invalid Credentials !!",
+    loginSuccess: "User logged in successfully"
   }
 }
 

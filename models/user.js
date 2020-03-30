@@ -1,19 +1,65 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const JWT = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   userName: {
-    type: String,
-    required: true
+    type: Schema.Types.String,
+    required: true,
+    unique: true,
   },
   email: {
     type: Schema.Types.String,
     required: true,
     unique: true,
+    lowercase: true,
   },
   password: {
+    type: String,
+    required: true,
+  },
+  token: {
     type: String,
   }
 });
 
-module.exports = mongoose.model('User', userSchema);
+/**
+ * Hash the password before saving the user model
+ */
+userSchema.pre('save', async function (next) {
+  const user = this;
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, 12);
+  }
+  next();
+});
+
+/**
+ * Generate an auth token for the user
+ */
+userSchema.methods.generateAuthToken = async function () {
+  const user = this
+  const token = JWT.sign({ _id: user._id }, process.env.JWT_KEY)
+  user.token = token
+  await user.save()
+  return token
+}
+
+/**
+ * Search for a user by email and password.
+ */
+userSchema.statics.findByCredentials = async (email, password) => {
+  const user = await User.findOne({ email })
+  if (!user) {
+    return null;
+  }
+  const isPasswordMatch = await bcrypt.compare(password, user.password)
+  if (!isPasswordMatch) {
+    return null;
+  }
+  return user
+}
+
+const User = mongoose.model('User', userSchema)
+module.exports = User;

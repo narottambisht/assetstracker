@@ -1,18 +1,10 @@
 const { body, validationResult } = require('express-validator');
-const bcrypt = require('bcrypt');
 const MESSAGE = require('../utils/strings');
 const User = require('../models/user');
 
-exports.validateSignupPayload = () => {
-  return [
-    body('userName', MESSAGE.auth.invalidUsername).exists(),
-    body('email', MESSAGE.auth.invalidEmail).exists().isEmail(),
-    body('password', MESSAGE.auth.invalidPassword).exists().isLength({ min: 5 })
-  ]
-}
-
 exports.userSignup = async (req, res, next) => {
-  const { userName, email, password } = req.body;
+  console.log(process.env.JWT_KEY);
+  const { userName, email } = req.body;
   let responseJson = {
     success: false,
     data: req.body
@@ -27,12 +19,11 @@ exports.userSignup = async (req, res, next) => {
     let userExistsByUsername = await User.findOne({ userName });
 
     if (userExistsByEmail || userExistsByUsername) {
-      responseJson.message = userExistsByEmail ? MESSAGE.auth.userExists('email') : MESSAGE.auth.userExists('userName')
+      responseJson.message = userExistsByEmail ? MESSAGE.auth.userExists('email') : MESSAGE.auth.userExists('username')
       userExistsByEmail ? responseJson.error = { email } : responseJson.error = { userName }
       res.status(422).json(responseJson);
     } else {
-      let bcryptPassword = await bcrypt.hash(password, 12);
-      const user = new User({ userName, email, password: bcryptPassword });
+      const user = new User(req.body);
       let userResult = await user.save();
       if (userResult) {
         responseJson.success = true;
@@ -42,4 +33,31 @@ exports.userSignup = async (req, res, next) => {
       }
     }
   }
+}
+
+exports.userLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+  let responseJson = {
+    success: false,
+    data: req.body
+  }
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    responseJson.error = error.errors;
+    responseJson.message = MESSAGE.auth.validationFailed;
+    res.status(422).json(responseJson);
+  } else {
+    const user = await User.findByCredentials(email, password)
+    if (!user) {
+      responseJson.message = MESSAGE.auth.invalidCred;
+      res.status(422).json(responseJson);
+    } else {
+      const token = await user.generateAuthToken();
+      responseJson.success = true
+      responseJson.token = token;
+      responseJson.message = MESSAGE.auth.loginSuccess;
+      res.status(422).json(responseJson);
+    }
+  }
+
 }
