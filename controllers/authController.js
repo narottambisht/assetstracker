@@ -3,7 +3,6 @@ const MESSAGE = require('../utils/strings');
 const User = require('../models/user');
 
 exports.userSignup = async (req, res, next) => {
-  console.log(process.env.JWT_KEY);
   const { userName, email } = req.body;
   let responseJson = {
     success: false,
@@ -54,9 +53,9 @@ exports.userLogin = async (req, res, next) => {
     } else {
       const token = await user.generateAuthToken();
       responseJson.success = true
-      responseJson.token = token;
+      responseJson.data.token = token;
       responseJson.message = MESSAGE.auth.loginSuccess;
-      res.status(422).json(responseJson);
+      res.status(200).json(responseJson);
     }
   }
 
