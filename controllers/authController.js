@@ -35,6 +35,7 @@ exports.userSignup = async (req, res, next) => {
 }
 
 exports.userLogin = async (req, res, next) => {
+  console.log('LOGIN REQUEST');
   const { email, password } = req.body;
   let responseJson = {
     success: false,
