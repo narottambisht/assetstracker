@@ -1,9 +1,11 @@
 const { body, validationResult } = require('express-validator');
 const MESSAGE = require('../utils/strings');
+const JWT = require('jsonwebtoken');
 const User = require('../models/user');
+const Roles = require('../models/roles');
 
 exports.userSignup = async (req, res, next) => {
-  const { userName, email } = req.body;
+  const { userName, email, role, password } = req.body;
   let responseJson = {
     success: false,
     data: req.body
@@ -16,13 +18,14 @@ exports.userSignup = async (req, res, next) => {
   } else {
     let userExistsByEmail = await User.findOne({ email });
     let userExistsByUsername = await User.findOne({ userName });
+    let userRole = await Roles.findOne({ role });
 
     if (userExistsByEmail || userExistsByUsername) {
       responseJson.message = userExistsByEmail ? MESSAGE.auth.userExists('email') : MESSAGE.auth.userExists('username')
       userExistsByEmail ? responseJson.error = { email } : responseJson.error = { userName }
       res.status(422).json(responseJson);
     } else {
-      const user = new User(req.body);
+      const user = new User({ userName, email, password, role: userRole._id });
       let userResult = await user.save();
       if (userResult) {
         responseJson.success = true;
@@ -35,7 +38,6 @@ exports.userSignup = async (req, res, next) => {
 }
 
 exports.userLogin = async (req, res, next) => {
-  console.log('LOGIN REQUEST');
   const { email, password } = req.body;
   let responseJson = {
     success: false,
@@ -45,19 +47,44 @@ exports.userLogin = async (req, res, next) => {
   if (!error.isEmpty()) {
     responseJson.error = error.errors;
     responseJson.message = MESSAGE.auth.validationFailed;
-    res.status(422).json(responseJson);
+    res.status(422).json(responseJson)
   } else {
-    const user = await User.findByCredentials(email, password)
+    const user = await User.findByCredentials(email, password);
+    await user.populate('role', ['role']).execPopulate();
     if (!user) {
       responseJson.message = MESSAGE.auth.invalidCred;
       res.status(422).json(responseJson);
     } else {
       const token = await user.generateAuthToken();
+      responseJson.data = user;
       responseJson.success = true
       responseJson.data.token = token;
       responseJson.message = MESSAGE.auth.loginSuccess;
       res.status(200).json(responseJson);
     }
+  }
+}
+
+exports.authenticateToken = async (req, res, next) => {
+  const { token } = req.body;
+
+  try {
+    let jwtVerificationResult = JWT.verify(token, process.env.JWT_KEY)
+    const findUser = await User.findById(jwtVerificationResult._id);
+    await findUser.populate('role', ['role']).execPopulate();
+    let responseJson = {
+      success: true,
+      message: MESSAGE.auth.tokenAuthSuccess,
+      data: findUser
+    }
+    res.status(200).send(responseJson);
+  } catch (error) {
+    let responseJson = {
+      success: false,
+      message: MESSAGE.auth.tokenAuthFailure,
+      data: token
+    }
+    res.status(200).send(responseJson);
   }
 
 }

@@ -19,6 +19,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: Schema.Types.ObjectId,
+    ref: 'Roles',
+    required: true
+  },
   token: {
     type: String,
   }

@@ -7,7 +7,9 @@ const MESSAGE = {
     invalidEmail: 'Invalid email',
     validationFailed: 'Validation Failed',
     invalidCred: "Login failed. Invalid Credentials !!",
-    loginSuccess: "User logged in successfully"
+    loginSuccess: "User logged in successfully",
+    tokenAuthSuccess: "User Authenticated",
+    tokenAuthFailure: "Failed to authenticate user"
   }
 }
 

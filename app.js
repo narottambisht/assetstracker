@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
+const { bootStraping } = require('./utils/misc');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/auth', authRoutes);
 mongoose.connect('mongodb+srv://narottam-singh:jftdefault@assetstracker-1n75z.mongodb.net/assetstracker?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {
     app.listen(8000, () => {
+      bootStraping();
       console.log('SERVER STARTED AND DATABASE CONNECTED')
     })
   })
