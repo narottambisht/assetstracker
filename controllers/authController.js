@@ -67,24 +67,21 @@ exports.userLogin = async (req, res, next) => {
 
 exports.authenticateToken = async (req, res, next) => {
   const { token } = req.body;
-
+  let responseJson = {
+    success: true,
+    message: MESSAGE.auth.tokenAuthSuccess,
+  }
   try {
     let jwtVerificationResult = JWT.verify(token, process.env.JWT_KEY)
     const findUser = await User.findById(jwtVerificationResult._id);
     await findUser.populate('role', ['role']).execPopulate();
-    let responseJson = {
-      success: true,
-      message: MESSAGE.auth.tokenAuthSuccess,
-      data: findUser
-    }
+    responseJson.data = findUser;
     res.status(200).send(responseJson);
   } catch (error) {
-    let responseJson = {
-      success: false,
-      message: MESSAGE.auth.tokenAuthFailure,
-      data: token
-    }
-    res.status(200).send(responseJson);
+    responseJson.success = false;
+    responseJson.message = MESSAGE.auth.tokenAuthFailure;
+    responseJson.data = req.body;
+    res.status(422).send(responseJson);
   }
 
 }
