@@ -9,7 +9,7 @@ const MESSAGE = {
     invalidCred: "Login failed. Invalid Credentials !!",
     loginSuccess: "User logged in successfully",
     tokenAuthSuccess: "User Authenticated",
-    tokenAuthFailure: "Failed to authenticate user"
+    tokenAuthFailure: "Failed to authenticate Token! Please login again."
   }
 }
 
