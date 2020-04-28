@@ -50,12 +50,13 @@ exports.userLogin = async (req, res, next) => {
     res.status(422).json(responseJson)
   } else {
     const user = await User.findByCredentials(email, password);
-    await user.populate('role', ['role']).execPopulate();
+
     if (!user) {
       responseJson.message = MESSAGE.auth.invalidCred;
       res.status(422).json(responseJson);
     } else {
       const token = await user.generateAuthToken();
+      await user.populate('role', ['role']).execPopulate();
       responseJson.data = user;
       responseJson.success = true
       responseJson.data.token = token;
