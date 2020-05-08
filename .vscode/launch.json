@@ -11,7 +11,8 @@
             "restart": true,
             "runtimeExecutable": "nodemon",
             "env": {
-                "JWT_KEY": "potterhead"
+                "JWT_KEY": "potterhead",
+                "PORT": "8090"
             },
             "console": "integratedTerminal",
             "program": "${workspaceFolder}/app.js"

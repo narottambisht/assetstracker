@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
+const miscRoutes = require('./routes/miscRoutes');
 const { bootStraping } = require('./utils/misc');
 
 const app = express();
@@ -19,12 +20,13 @@ app.use(function (req, res, next) {
 });
 
 app.use('/auth', authRoutes);
+app.use(miscRoutes);
 
 mongoose.connect('mongodb+srv://narottam-singh:jftdefault@assetstracker-1n75z.mongodb.net/assetstracker?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {
-    app.listen(8000, () => {
+    app.listen(process.env.PORT, () => {
       bootStraping();
-      console.log('SERVER STARTED AND DATABASE CONNECTED')
+      console.log(`SERVER STARTED AND DATABASE CONNECTED AT http://localhost:${process.env.PORT}`)
     })
   })
   .catch(err => {

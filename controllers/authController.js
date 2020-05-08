@@ -84,5 +84,4 @@ exports.authenticateToken = async (req, res, next) => {
     responseJson.data = req.body;
     res.status(422).send(responseJson);
   }
-
 }
