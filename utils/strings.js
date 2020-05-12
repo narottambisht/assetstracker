@@ -10,6 +10,10 @@ const MESSAGE = {
     loginSuccess: "User logged in successfully",
     tokenAuthSuccess: "User Authenticated",
     tokenAuthFailure: "Failed to authenticate Token! Please login again."
+  },
+  misc: {
+    profileUpdated: 'Your profile has been updated successfully!',
+    updateProfileFailed: "Sorry we couldn't update your profile, please try again!"
   }
 }
 

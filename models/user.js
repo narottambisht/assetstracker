@@ -4,18 +4,18 @@ const JWT = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  // firstName: {
-  //   type: Schema.Types.String,
-  // },
-  // lastName: {
-  //   type: Schema.Types.String,
-  // },
-  // mobileNumber: {
-  //   type: Schema.Types.String,
-  // },
-  // address: {
-  //   type: Schema.Types.String,
-  // },
+  firstName: {
+    type: Schema.Types.String,
+  },
+  lastName: {
+    type: Schema.Types.String,
+  },
+  mobileNumber: {
+    type: Schema.Types.String,
+  },
+  address: {
+    type: Schema.Types.String,
+  },
   userName: {
     type: Schema.Types.String,
     required: true,
