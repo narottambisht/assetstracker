@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const miscRoutes = require('./routes/miscRoutes');
+const clientRoutes = require('./routes/clientRoutes');
 const { bootStraping } = require('./utils/misc');
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(function (req, res, next) {
 
 app.use('/auth', authRoutes);
 app.use(miscRoutes);
+app.use(clientRoutes);
 
 mongoose.connect('mongodb+srv://narottam-singh:jftdefault@assetstracker-1n75z.mongodb.net/assetstracker?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {
