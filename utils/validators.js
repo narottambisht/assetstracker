@@ -15,3 +15,13 @@ exports.validateLoginPayload = () => {
     body('password', MESSAGE.auth.invalidPassword).exists().isLength({ min: 5 })
   ]
 }
+
+exports.validateAddClientPayload = () => {
+  return [
+    body('email', MESSAGE.auth.invalidEmail).exists().isEmail(),
+    body('firstName', MESSAGE.misc.emptyFields).isLength({ min: 1 }),
+    body('lastName', MESSAGE.misc.emptyFields).isLength({ min: 1 }),
+    body('mobileNumber', MESSAGE.misc.validMobileNumber).isMobilePhone(),
+    body('address', MESSAGE.misc.emptyFields).isLength({ min: 1 })
+  ]
+}

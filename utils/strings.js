@@ -13,7 +13,9 @@ const MESSAGE = {
   },
   misc: {
     profileUpdated: 'Your profile has been updated successfully!',
-    updateProfileFailed: "Sorry we couldn't update your profile, please try again!"
+    updateProfileFailed: "Sorry we couldn't update your profile, please try again!",
+    validMobileNumber: "Not a valid mobile number!",
+    emptyFields: "Cannot entertain empty fields!"
   },
   client: {
     invalidRole: 'You are a not authorized to create clients. Profile with role agent can create clients'

@@ -12,7 +12,8 @@
             "runtimeExecutable": "nodemon",
             "env": {
                 "JWT_KEY": "potterhead",
-                "PORT": "8090"
+                "PORT": "8090",
+                "MONGODB_URL": "mongodb+srv://narottam-singh:jftdefault@assetstracker-1n75z.mongodb.net/assetstracker?retryWrites=true&w=majority"
             },
             "console": "integratedTerminal",
             "program": "${workspaceFolder}/app.js"

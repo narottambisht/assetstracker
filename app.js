@@ -24,7 +24,7 @@ app.use('/auth', authRoutes);
 app.use(miscRoutes);
 app.use(clientRoutes);
 
-mongoose.connect('mongodb+srv://narottam-singh:jftdefault@assetstracker-1n75z.mongodb.net/assetstracker?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {
     app.listen(process.env.PORT, () => {
       bootStraping();
