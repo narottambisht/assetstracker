@@ -5,6 +5,6 @@ const authenticateToken = require('../policies/authenticateToken');
 const isRoleAgent = require('../policies/isRoleAgent');
 const validators = require('../utils/validators');
 
-router.put('/client/add', authenticateToken, isRoleAgent, validators.validateAddClientPayload(), clientController.addClient);
+router.put('/add', authenticateToken, isRoleAgent, validators.validateAddClientPayload(), clientController.addClient);
 
 module.exports = router;

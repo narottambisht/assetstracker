@@ -15,7 +15,7 @@
                 "PORT": "8090",
                 "MONGODB_URL": "mongodb+srv://narottam-singh:jftdefault@assetstracker-1n75z.mongodb.net/assetstracker?retryWrites=true&w=majority"
             },
-            "console": "integratedTerminal",
+            "console": "internalConsole",
             "program": "${workspaceFolder}/app.js"
         }
     ]

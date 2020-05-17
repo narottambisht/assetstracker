@@ -22,7 +22,7 @@ app.use(function (req, res, next) {
 
 app.use('/auth', authRoutes);
 app.use(miscRoutes);
-app.use(clientRoutes);
+app.use('/client', clientRoutes);
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {

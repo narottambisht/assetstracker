@@ -2,8 +2,7 @@ const User = require('../models/user');
 const MESSAGE = require('../utils/strings');
 
 exports.addClient = async (req, res, next) => {
-  const { firstName, lastName, email, mobileNumber, address, userName
-  } = req.body;
+  const { firstName, lastName, email, mobileNumber, address, userName } = req.body;
   let responseJson = {
     success: false,
     message: '',
