@@ -18,7 +18,8 @@ const MESSAGE = {
     emptyFields: "Cannot entertain empty fields!"
   },
   client: {
-    invalidRole: 'You are a not authorized to create clients. Profile with role agent can create clients'
+    invalidRole: 'You are a not authorized to create clients. Profile with role agent can create clients',
+    newClientAdded: 'You have added a new client!'
   }
 }
 
