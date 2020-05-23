@@ -38,11 +38,15 @@ const userSchema = new Schema({
   },
   token: {
     type: String,
+  },
+  agentId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users'
   }
 });
 
 /**
- * Hash the password before saving the user model
+ * Event that is fired to Hash the password before saving the user model
  */
 userSchema.pre('save', async function (next) {
   const user = this;
@@ -64,7 +68,9 @@ userSchema.methods.generateAuthToken = async function () {
 }
 
 /**
- * Search for a user by email and password.
+ * Function to search a user by email and password and return if user is found otherwise return null
+ * @param {String} email Search a user by the email
+ * @param {String} password Check the user if it matches the passowrd
  */
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email })

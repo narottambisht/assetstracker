@@ -6,6 +6,7 @@ const MESSAGE = require('../utils/strings');
 exports.addClient = async (req, res, next) => {
   const { firstName, lastName, email, mobileNumber, address } = req.body;
   const defaultClientRole = 'USER';
+  const agentId = req.user._id;
   let responseJson = {
     success: false,
     message: '',
@@ -29,7 +30,7 @@ exports.addClient = async (req, res, next) => {
 
     let userName = email.split('@');
     userName = userName[0];
-    let createClient = new User({ firstName, lastName, email, mobileNumber, address, userName, role: userRole._id });
+    let createClient = new User({ firstName, lastName, email, mobileNumber, address, userName, role: userRole._id, agentId, password: userName });
     let clientCreated = await createClient.save();
     if (clientCreated) {
       responseJson.success = true;
