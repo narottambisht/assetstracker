@@ -1,0 +1,85 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is documentation for my pet project completely on MERN Stack. For tracking a indivisual's assets",
+    "version": "1.0.0",
+    "title": "Assetstracker API docs",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "support@assetstracker.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Signup a new User/Agent",
+        "description": "Endpoint to signup a new user/agent.",
+        "operationId": "signup",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "formData",
+            "description": "User/Agent userName to signup (has to be unique)",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "description": "User/Agent email to signup (has to be unique)",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "role",
+            "description": "User/Agent role to signup",
+            "required": true,
+            "items": {
+              "type": "String",
+              "enum": [
+                "USER",
+                "AGENT",
+                "ADMIN"
+              ],
+              "default": "USER"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "Enter a valid password to signup",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registration Successful"
+          },
+          "422": {
+            "description": "Validation Failed / User exists with same email or username"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

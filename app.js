@@ -2,15 +2,19 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const swaggerUi = require('swagger-ui-express');
 const authRoutes = require('./routes/authRoutes');
 const miscRoutes = require('./routes/miscRoutes');
 const clientRoutes = require('./routes/clientRoutes');
 const { bootStraping } = require('./utils/misc');
+const swaggerDocument = require('./swaggerDoc.json');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
