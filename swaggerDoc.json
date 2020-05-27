@@ -13,6 +13,15 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apikey",
+      "name": "Authorization",
+      "in": "header",
+      "bearerFormat": "JWT",
+      "description": "Add Bearer before the token."
+    }
+  },
   "paths": {
     "/auth/signup": {
       "post": {
@@ -128,7 +137,7 @@
       }
     },
     "/client/add": {
-      "post": {
+      "put": {
         "tags": [
           "Client"
         ],
@@ -183,10 +192,62 @@
         },
         "security": [
           {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/updateprofile": {
+      "put": {
+        "tags": [
+          "Miscellaneous"
+        ],
+        "summary": "Endpoint to update the user's profile",
+        "description": "There are some details that get filled up while user sign's up. But if he want to update more details in the settings section of the front end he can do that using this settings page and FE can use this endpoint to do that.",
+        "operationId": "updateProfile",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "firstName",
+            "description": "User's firstName to update",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "lastName",
+            "description": "User's lastName to update.",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "mobileNumber",
+            "description": "Mobile number to update.",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "address",
+            "description": "Client's Address to update",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Update Successful, the new updated user object will be returned in the response."
+          },
+          "400": {
+            "description": "Update failed, due to validation error or some other error."
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
           }
         ]
       }
