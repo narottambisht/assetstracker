@@ -80,6 +80,116 @@
           }
         ]
       }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login a User/Agent into the application.",
+        "description": "Endpoint to login users/agents.",
+        "operationId": "login",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "email",
+            "description": "User/Agent email to login into the application.",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "Enter a password to login.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login Successful. Will return the user object and an JWT token for further requests"
+          },
+          "422": {
+            "description": "Validation Failed / User doesn't exist with same email / password."
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/client/add": {
+      "post": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Agent can create a client under his account",
+        "description": "Agent can create a client with his agentId mentioned in that user. If the logged in user is not an agent, the application will return an error.",
+        "operationId": "addClient",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "firstName",
+            "description": "User's firstName that the agent is trying to add.",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "lastName",
+            "description": "User's lastName that the agent is trying to add.",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "description": "User's email that the agent is trying to add ( has to be unique ). Username will be created from this email only using the alphabets before @ symbol. Password will also be same as username",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "mobileNumber",
+            "description": "Mobile number for the agent's client.",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "address",
+            "description": "Client's Address",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login Successful. Will return the user object and an JWT token for further requests"
+          },
+          "422": {
+            "description": "Validation Failed / User doesn't exist with same email / password."
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
     }
   }
 }
